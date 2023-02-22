@@ -1,17 +1,18 @@
 
-Ultrascale+系列FPGA总结：基本结构
----
+<h1 style="text-align:center">Xilinx Ultrascale+系列FPGA：基本结构</h1>
+
+--------------------------------------------------------------------------------
 
 相关文档:
-文档名称                                 | 文档编号
-:--------------------------------------- | :-------
-**Configuration User Guide**            | UG570
-**SelectIO Resources User Guide**       | UG571
-**Clocking Resources User Guide**       | UG572
-**Memory Resources User Guide**         | UG573
-**Configurable Logic Block User Guide** | UG574
-**DSP Slice User Guide**                | UG579
-**System Monitor User Guide**           | UG580
+| 文档名称                                | 文档编号 |
+| :-------------------------------------- | :------- |
+| **Configuration User Guide**            | UG570    |
+| **SelectIO Resources User Guide**       | UG571    |
+| **Clocking Resources User Guide**       | UG572    |
+| **Memory Resources User Guide**         | UG573    |
+| **Configurable Logic Block User Guide** | UG574    |
+| **DSP Slice User Guide**                | UG579    |
+| **System Monitor User Guide**           | UG580    |
 
 --------------------------------------------------------------------------------
 # 1. CLB
@@ -665,27 +666,27 @@ Ultrascale+系列FPGA总结：基本结构
     * 不推荐的: Master-Serial, Master SelectMAP
 * 配置管脚 (仅考虑 JTAG 和 Master SPI)
     * 专用信号, 位于Bank 0
-        分类  | Pin         | I/O    | 注意
-        :---: | :---------: | :----: | :-------
-        JATG  | TCK_0       | I      | 官方使用 2mm 间距的插针
-        ^     | TDI_0       | I      | ^
-        ^     | TDO_0       | O      | ^
-        ^     | TMS_0       | I      | ^
-        CFG   | PROGRAM_B_0 | I      | 复位配置, 低有效, 最好用 RC POR 复位电路(或复位芯片), 上拉(≤ 4.7k)
-        ^     | INIT_B_0    | IO(OD) | 表明配置存储器开始初始化, 需要上拉 (4.7k)
-        ^     | DONE_0      | IO     | 是否配置成功, 高有效, 最好通过 NMOS 驱动一个 LED, 上拉(330)
-        ^     | M[2:0]_0    | I      | 配置模式, 上下拉电阻 ≤ 1 kΩ
-        ^     | CFGBVS_0    | I      | 如果与配置相关的 BANK 0, 65 是 2.5/3.3 V供电, 需要拉到 2.5/3.3 V; 如果是 1.5/1.8V, 拉到 Gnd
-        Flash | CCLK_0      | IO     | 配置时钟, 默认关闭且三态弱上拉
-        ^     | FCS         | O      | 配置 Flash 的片选信号, 上拉 ≤ 4.7 kΩ
-        ^     | D00 - D04   | IO     | 配置 Flash 的数据接口, 排序最好与 QSPI 保持一致
-        Init  | PUDC_B      | I      | 0 = 使能内部上拉电阻, 1 = 禁用; 不能 float, 上下拉电阻 ≤ 1 kΩ
+        | 分类  |     Pin     |  I/O   | 注意                                                                                        |
+        | :---: | :---------: | :----: | :------------------------------------------------------------------------------------------ |
+        | JATG  |    TCK_0    |   I    | 官方使用 2mm 间距的插针                                                                     |
+        |   ^   |    TDI_0    |   I    | ^                                                                                           |
+        |   ^   |    TDO_0    |   O    | ^                                                                                           |
+        |   ^   |    TMS_0    |   I    | ^                                                                                           |
+        |  CFG  | PROGRAM_B_0 |   I    | 复位配置, 低有效, 最好用 RC POR 复位电路(或复位芯片), 上拉(≤ 4.7k)                          |
+        |   ^   |  INIT_B_0   | IO(OD) | 表明配置存储器开始初始化, 需要上拉 (4.7k)                                                   |
+        |   ^   |   DONE_0    |   IO   | 是否配置成功, 高有效, 最好通过 NMOS 驱动一个 LED, 上拉(330)                                 |
+        |   ^   |  M[2:0]_0   |   I    | 配置模式, 上下拉电阻 ≤ 1 kΩ                                                                 |
+        |   ^   |  CFGBVS_0   |   I    | 如果与配置相关的 BANK 0, 65 是 2.5/3.3 V供电, 需要拉到 2.5/3.3 V; 如果是 1.5/1.8V, 拉到 Gnd |
+        | Flash |   CCLK_0    |   IO   | 配置时钟, 默认关闭且三态弱上拉                                                              |
+        |   ^   |     FCS     |   O    | 配置 Flash 的片选信号, 上拉 ≤ 4.7 kΩ                                                        |
+        |   ^   |  D00 - D04  |   IO   | 配置 Flash 的数据接口, 排序最好与 QSPI 保持一致                                             |
+        | Init  |   PUDC_B    |   I    | 0 = 使能内部上拉电阻, 1 = 禁用; 不能 float, 上下拉电阻 ≤ 1 kΩ                               |
     * 多功能信号, 位于 Bank 65
-        分类  | Pin         | I/O    | 注意
-        :---: | :---------: | :----: | :-------
-        Flash | EMCCLK      | I      | 仅当使能外部 Master CCLK 时才需要
-        ^     | DOUT_CSO_B  | O      | 仅当 QSPI 配置为菊花链时才需要
-        ^     | FCS2_B      | O      | 仅当使用双 QSPI 时才需要
+        | 分类  |    Pin     |  I/O  | 注意                              |
+        | :---: | :--------: | :---: | :-------------------------------- |
+        | Flash |   EMCCLK   |   I   | 仅当使能外部 Master CCLK 时才需要 |
+        |   ^   | DOUT_CSO_B |   O   | 仅当 QSPI 配置为菊花链时才需要    |
+        |   ^   |   FCS2_B   |   O   | 仅当使用双 QSPI 时才需要          |
     * 电源管脚
         * POR_OVERRIDE: 当用户确保电源上升很快时, 可以使用此管脚减小 POR 时间 (上拉到 VCCINT), 不能悬空
         * VBATT: 密钥相关电源

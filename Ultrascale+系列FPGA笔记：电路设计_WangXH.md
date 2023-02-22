@@ -1,6 +1,7 @@
 
-Xilinx Ultrascale+系列FPGA总结：电路设计
----
+<h1 style="text-align:center">Xilinx Ultrascale+系列FPGA：电路设计</h1>
+
+--------------------------------------------------------------------------------
 
 ==继续编写==
 
@@ -9,19 +10,19 @@ Xilinx Ultrascale+系列FPGA总结：电路设计
 ==以下作废==
 
 相关文档:
-分类      | 文档名称                                                       | 文档编号
-:-------- | :------------------------------------------------------------- | :-------
-基本结构  | Configuration User Guide                                       | UG470
-^         | SelectIO Resources User Guide                                  | UG471
-^         | Clocking Resources User Guide                                  | UG472
-^         | Memory Resources User Guide                                    | UG473
-^         | Configurable Logic Block User Guide                            | UG474
-^         | DSP48E1 Slice User Guide                                       | UG479
-收发器    | GTX/GTH Transceivers User Guide                                | UG476
-^         | GTP Transceivers User Guide                                    | UG482
-ADC       | XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide | UG480
-封装和PCB | **Packaging and Pinout Product Specification**               | UG475
-^         | **PCB Design Guide**                                          | UG483
+| 分类      | 文档名称                                                       | 文档编号 |
+| :-------- | :------------------------------------------------------------- | :------- |
+| 基本结构  | Configuration User Guide                                       | UG470    |
+| ^         | SelectIO Resources User Guide                                  | UG471    |
+| ^         | Clocking Resources User Guide                                  | UG472    |
+| ^         | Memory Resources User Guide                                    | UG473    |
+| ^         | Configurable Logic Block User Guide                            | UG474    |
+| ^         | DSP48E1 Slice User Guide                                       | UG479    |
+| 收发器    | GTX/GTH Transceivers User Guide                                | UG476    |
+| ^         | GTP Transceivers User Guide                                    | UG482    |
+| ADC       | XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide | UG480    |
+| 封装和PCB | **Packaging and Pinout Product Specification**                 | UG475    |
+| ^         | **PCB Design Guide**                                           | UG483    |
 
 --------------------------------------------------------------------------------
 
@@ -29,14 +30,14 @@ ADC       | XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide | UG4
 Xilinx建议硬件开发时将时钟设计作为首要因素之一, 应在管脚分配之前
 
 ## 1.1. 电源
-分类 | 电源      | 注意
-:--: | :-------: | :-------
-核心 | VCCINT    | 0.9V / 1.0V
-^    | VCCBRAM   | 1.0V
-^    | VCCAUX    | 1.8V
-^    | VCCBATT_0 | 密钥的备用电池, 不用时连 Vcc 或 Gnd
-BANK | VCCO_#    | HP Bank 最大支持 1.8V, HR 最大支持 3.3V
-^    | VREF      | 信号的参考电压
+| 分类  |   电源    | 注意                                    |
+| :---: | :-------: | :-------------------------------------- |
+| 核心  |  VCCINT   | 0.9V / 1.0V                             |
+|   ^   |  VCCBRAM  | 1.0V                                    |
+|   ^   |  VCCAUX   | 1.8V                                    |
+|   ^   | VCCBATT_0 | 密钥的备用电池, 不用时连 Vcc 或 Gnd     |
+| BANK  |  VCCO_#   | HP Bank 最大支持 1.8V, HR 最大支持 3.3V |
+|   ^   |   VREF    | 信号的参考电压                          |
 
 ### 1.1.1. 电源启动顺序
 * 上电
@@ -54,36 +55,36 @@ BANK | VCCO_#    | HP Bank 最大支持 1.8V, HR 最大支持 3.3V
 
 ## 1.2. 特殊信号
 * 专用信号
-    分类  | Pin         | I/O    | 注意
-    :---: | :---------: | :----: | :-------
-    JATG  | TCK_0       | I      | 官方使用 2mm 间距的插针
-    ^     | TDI_0       | I      | ^
-    ^     | TDO_0       | O      | ^
-    ^     | TMS_0       | I      | ^
-    CFG   | PROGRAM_B_0 | I      | 复位配置, 低有效, 最好用 RC POR 复位电路(或复位芯片), 上拉(4.7k)
-    ^     | INIT_B_0    | IO(OD) | 表明配置存储器开始初始化, 需要上拉 (4.7k)
-    ^     | DONE_0      | IO     | 是否配置成功, 高有效, 最好通过 NMOS 驱动一个 LED, 上拉(330)
-    ^     | M[2:0]_0    | I      | 配置模式, Master_SPI 模式为 001, 串联电阻需 ≤ 1 kΩ
-    ^     | CFGBVS_0    | I      | 如果与配置相关的 BANK 0, 14, 15 是 2.5/3.3 V供电, 需要拉到 2.5/3.3 V; 如果是 1.8V, 拉到 Gnd
-    Flash | CCLK_0      | IO     | 配置时钟
+    | 分类  |     Pin     |  I/O   | 注意                                                                                        |
+    | :---: | :---------: | :----: | :------------------------------------------------------------------------------------------ |
+    | JATG  |    TCK_0    |   I    | 官方使用 2mm 间距的插针                                                                     |
+    |   ^   |    TDI_0    |   I    | ^                                                                                           |
+    |   ^   |    TDO_0    |   O    | ^                                                                                           |
+    |   ^   |    TMS_0    |   I    | ^                                                                                           |
+    |  CFG  | PROGRAM_B_0 |   I    | 复位配置, 低有效, 最好用 RC POR 复位电路(或复位芯片), 上拉(4.7k)                            |
+    |   ^   |  INIT_B_0   | IO(OD) | 表明配置存储器开始初始化, 需要上拉 (4.7k)                                                   |
+    |   ^   |   DONE_0    |   IO   | 是否配置成功, 高有效, 最好通过 NMOS 驱动一个 LED, 上拉(330)                                 |
+    |   ^   |  M[2:0]_0   |   I    | 配置模式, Master_SPI 模式为 001, 串联电阻需 ≤ 1 kΩ                                          |
+    |   ^   |  CFGBVS_0   |   I    | 如果与配置相关的 BANK 0, 14, 15 是 2.5/3.3 V供电, 需要拉到 2.5/3.3 V; 如果是 1.8V, 拉到 Gnd |
+    | Flash |   CCLK_0    |   IO   | 配置时钟                                                                                    |
 * 多功能信号
-    分类  | Pin          | I/O    | 注意
-    :---: | :----------: | :----: | :-------
-    Flash | D00 - D4     | IO     | 配置 Flash 的数据接口, 排序最好与 QSPI 保持一致
-    ^     | FCS          | O      | 配置 Flash 的片选信号, 上拉 ≤ 4.7 kΩ
-    Init  | PUDC_B       | I      | 0 = 使能内部上拉电阻, 1 = 禁用; 不能 float
+    | 分类  |   Pin    |  I/O  | 注意                                            |
+    | :---: | :------: | :---: | :---------------------------------------------- |
+    | Flash | D00 - D4 |  IO   | 配置 Flash 的数据接口, 排序最好与 QSPI 保持一致 |
+    |   ^   |   FCS    |   O   | 配置 Flash 的片选信号, 上拉 ≤ 4.7 kΩ            |
+    | Init  |  PUDC_B  |   I   | 0 = 使能内部上拉电阻, 1 = 禁用; 不能 float      |
 * 内部 ADC
-    Pin             | 注意
-    :-------------: | :-------
-    VCCADC_0        | 1.8V
-    GNDADC_0        | Gnd
-    VP_0/VN_0       | 专用模拟输入
-    VREFP_0/VREFN_0 | 1.25V参考电压, 如果使用内部基准, 全接地
-    AD[0:15]_P/N    | 辅助的模拟输入
+    |       Pin       | 注意                                    |
+    | :-------------: | :-------------------------------------- |
+    |    VCCADC_0     | 1.8V                                    |
+    |    GNDADC_0     | Gnd                                     |
+    |    VP_0/VN_0    | 专用模拟输入                            |
+    | VREFP_0/VREFN_0 | 1.25V参考电压, 如果使用内部基准, 全接地 |
+    |  AD[0:15]_P/N   | 辅助的模拟输入                          |
 * 温度传感器
-    Pin          | 注意
-    :----------: | :-------
-    DXP_0, DXN_0 | 内部温度传感器, 不用时, 接地
+    |     Pin      | 注意                         |
+    | :----------: | :--------------------------- |
+    | DXP_0, DXN_0 | 内部温度传感器, 不用时, 接地 |
 
 ## 1.3. 时钟输入
 1. 供多个 Region 使用的时钟需要连接在 `Multi Region Clock Capable (MRCC)` 管脚上

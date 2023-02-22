@@ -1,20 +1,21 @@
 
-Xilinx 7系列FPGA总结：高速收发器结构
----
+<h1 style="text-align:center">Xilinx 7系列FPGA：高速收发器</h1>
+
+--------------------------------------------------------------------------------
 相关文档:
-分类      | 文档名称                                                       | 文档编号
-:-------- | :------------------------------------------------------------- | :-------
-基本结构  | Configuration User Guide                                       | UG470
-^         | SelectIO Resources User Guide                                  | UG471
-^         | Clocking Resources User Guide                                  | UG472
-^         | Memory Resources User Guide                                    | UG473
-^         | Configurable Logic Block User Guide                            | UG474
-^         | DSP48E1 Slice User Guide                                       | UG479
-收发器    | **GTX/GTH Transceivers User Guide**                           | UG476
-^         | **GTP Transceivers User Guide**                               | UG482
-ADC       | XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide | UG480
-封装和PCB | Packaging and Pinout Product Specification                     | UG475
-^         | PCB Design Guide                                               | UG483
+| 分类      | 文档名称                                                       | 文档编号 |
+| :-------- | :------------------------------------------------------------- | :------- |
+| 基本结构  | Configuration User Guide                                       | UG470    |
+| ^         | SelectIO Resources User Guide                                  | UG471    |
+| ^         | Clocking Resources User Guide                                  | UG472    |
+| ^         | Memory Resources User Guide                                    | UG473    |
+| ^         | Configurable Logic Block User Guide                            | UG474    |
+| ^         | DSP48E1 Slice User Guide                                       | UG479    |
+| 收发器    | **GTX/GTH Transceivers User Guide**                            | UG476    |
+| ^         | **GTP Transceivers User Guide**                                | UG482    |
+| ADC       | XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide | UG480    |
+| 封装和PCB | Packaging and Pinout Product Specification                     | UG475    |
+| ^         | PCB Design Guide                                               | UG483    |
 
 
 --------------------------------------------------------------------------------

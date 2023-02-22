@@ -1,12 +1,13 @@
 
-Zynq总结: 器件结构
----
+<h1 style="text-align:center">Xilinx Zynq 7000：器件结构</h1>
+
+--------------------------------------------------------------------------------
 相关文档:
-分类      | 文档名称                                   | 文档编号
-:-------- | :----------------------------------------- | :-------
-基本结构  | **Technical Reference Manual**            | UG585
-封装和PCB | Packaging and Pinout Product Specification | UG865
-^         | PCB Design Guide                           | UG933
+| 分类      | 文档名称                                   | 文档编号 |
+| :-------- | :----------------------------------------- | :------- |
+| 基本结构  | **Technical Reference Manual**             | UG585    |
+| 封装和PCB | Packaging and Pinout Product Specification | UG865    |
+| ^         | PCB Design Guide                           | UG933    |
 
 --------------------------------------------------------------------------------
 # 1. 总体结构
@@ -130,20 +131,20 @@ Zynq总结: 器件结构
 ## 2.4. PS-PL MIO-EMIO
 > ![UG585_Fig2-2](/assets/UG585_Fig2-3.png)
 * IOP 信号连接
-    外设        | MIO 路由          | EMIO 路由
-    :---------- | :---------------- |:---
-    TTC [0,1]   | 时钟输入, 波形输出
-    SWDT        | 时钟输入, 复位输出
-    SMC, Quad-SPI [0,1] | 存储器    | x
-    SDIO [0,1]  | 50 MHz 接口       | 25 MHz 接口
-    GPIO        | 54 I/O, bank[3:2] | 64 通道 (I, O, T), bank[3:2]
-    USB [0,1]   | Host, device, OTG | x
-    Ethernet [0,1] | RGMII v2.0     | MII/GMII
-    SPI [0,1]   | 50 MHz
-    CAN [0,1]   | ISO 11898 -1, CAN 2.0A/B
-    UART [0,1]  | TX/RX             | TX, RX, DTR, DCD, DSR, RI, RTS and CTS
-    I2C [0,1]   | SCL, SDA {0, 1}
-    PJTAG       | TCK, TMS, TDI, TDO | TCK, TMS, TDI, TDO, 3-state for TDO
+    | 外设                | MIO 路由                 | EMIO 路由                              |
+    | :------------------ | :----------------------- | :------------------------------------- |
+    | TTC [0,1]           | 时钟输入, 波形输出       |
+    | SWDT                | 时钟输入, 复位输出       |
+    | SMC, Quad-SPI [0,1] | 存储器                   | x                                      |
+    | SDIO [0,1]          | 50 MHz 接口              | 25 MHz 接口                            |
+    | GPIO                | 54 I/O, bank[3:2]        | 64 通道 (I, O, T), bank[3:2]           |
+    | USB [0,1]           | Host, device, OTG        | x                                      |
+    | Ethernet [0,1]      | RGMII v2.0               | MII/GMII                               |
+    | SPI [0,1]           | 50 MHz                   |
+    | CAN [0,1]           | ISO 11898 -1, CAN 2.0A/B |
+    | UART [0,1]          | TX/RX                    | TX, RX, DTR, DCD, DSR, RI, RTS and CTS |
+    | I2C [0,1]           | SCL, SDA {0, 1}          |
+    | PJTAG               | TCK, TMS, TDI, TDO       | TCK, TMS, TDI, TDO, 3-state for TDO    |
 
     * 使用 Vivado 分配, Vivado 自动设置相关寄存器
 * IOP 接口的 IO 必须整组使用
@@ -212,16 +213,16 @@ Zynq总结: 器件结构
 ### 2.6.7. DMA Req/Ack
 * DMA 的外设请求接口, PL 请求 PS 中的 DMA 开始传输
 * 信号:
-    类型 | 信号                    | I/O
-    :--: | :---------------------- | :-:
-    时钟 | **DMA[3:0]ACLK**        | I
-    请求 | **DMA[3:0]DRREADY**     | O
-    ^    | **DMA[3:0]DRVALID**     | I
-    ^    | **DMA[3:0]DRTYPE[1:0]** | I
-    ^    | **DMA[3:0]DRLAST**      | I
-    确认 | **DMA[3:0]DAREADY**     | I
-    ^    | **DMA[3:0]DAVALID**     | O
-    ^    | **DMA[3:0]DATYPE[1:0]** | O
+    | 类型  | 信号                    |  I/O  |
+    | :---: | :---------------------- | :---: |
+    | 时钟  | **DMA[3:0]ACLK**        |   I   |
+    | 请求  | **DMA[3:0]DRREADY**     |   O   |
+    |   ^   | **DMA[3:0]DRVALID**     |   I   |
+    |   ^   | **DMA[3:0]DRTYPE[1:0]** |   I   |
+    |   ^   | **DMA[3:0]DRLAST**      |   I   |
+    | 确认  | **DMA[3:0]DAREADY**     |   I   |
+    |   ^   | **DMA[3:0]DAVALID**     |   O   |
+    |   ^   | **DMA[3:0]DATYPE[1:0]** |   O   |
 
 ## 2.7. PL IO
 * 参考 datasheet
@@ -263,32 +264,32 @@ Zynq总结: 器件结构
         * SDK 中的 BSP 库提供 API
 * 内存顺序
     * 使用 MMU 设置不同内存空间的属性
-        存储器        | 内存范围                | 属性
-        --------------|-------------------------|-----------------------------------
-        DDR           | 0x00000000 - 0x3FFFFFFF | Normal write-back Cacheable
-        PL            | 0x40000000 - 0xBFFFFFFF | Strongly Ordered
-        Reserved      | 0xC0000000 - 0xDFFFFFFF | -
-        IOP           | 0xE0000000 - 0xE02FFFFF | Device Memory
-        Reserved      | 0xE0300000 - 0xE0FFFFFF | Unassigned
-        NAND, NOR     | 0xE1000000 - 0xE3FFFFFF | Device memory
-        SRAM          | 0xE4000000 - 0xE5FFFFFF | Normal write-back Cacheable
-        Reserved      | 0xE6000000 - 0xF7FFFFFF | -
-        AMBA APB 外设 | 0xF8000000 - 0xF8FFFFFF | Device Memory
-        Reserved      | 0xF9000000 - 0xFBFFFFFF | -
-        QSPI          | 0xFC000000 - 0xFDFFFFFF | Normal write-through cacheable
-        Reserved      | 0xFE000000 - 0xFFEFFFFF | -
-        OCM           | 0xFFF00000 - 0xFFFFFFFF | Normal inner write-back cacheable
+        | 存储器        | 内存范围                | 属性                              |
+        | ------------- | ----------------------- | --------------------------------- |
+        | DDR           | 0x00000000 - 0x3FFFFFFF | Normal write-back Cacheable       |
+        | PL            | 0x40000000 - 0xBFFFFFFF | Strongly Ordered                  |
+        | Reserved      | 0xC0000000 - 0xDFFFFFFF | -                                 |
+        | IOP           | 0xE0000000 - 0xE02FFFFF | Device Memory                     |
+        | Reserved      | 0xE0300000 - 0xE0FFFFFF | Unassigned                        |
+        | NAND, NOR     | 0xE1000000 - 0xE3FFFFFF | Device memory                     |
+        | SRAM          | 0xE4000000 - 0xE5FFFFFF | Normal write-back Cacheable       |
+        | Reserved      | 0xE6000000 - 0xF7FFFFFF | -                                 |
+        | AMBA APB 外设 | 0xF8000000 - 0xF8FFFFFF | Device Memory                     |
+        | Reserved      | 0xF9000000 - 0xFBFFFFFF | -                                 |
+        | QSPI          | 0xFC000000 - 0xFDFFFFFF | Normal write-through cacheable    |
+        | Reserved      | 0xFE000000 - 0xFFEFFFFF | -                                 |
+        | OCM           | 0xFFF00000 - 0xFFFFFFFF | Normal inner write-back cacheable |
 * 定制的 CP15 寄存器
-    配置信号      | 寄存器域                        | 位     | 复位值
-    :-----------: | :-----------------------------: | :----: | :----:
-    MAXCLKLATENCY | c15.Power control register      | [10:8] | b111
-    CFGEND        | c1.SCTLR.EE                     | [25]   | b0
-    CFGNMFI       | c1.SCTLR.NMFI                   | [27]   | b1
-    TEINIT        | c1.SCTLR.TE                     | [30]   | b0
-    VINITHI       | c1.SCTLR.V                      | [13]   | b0
-    CLUSTERID     | c0.MPIDR.ClustreID              | [11:8] | b0000
-    (none)        | c0.REVIDR                       | [31:0] | 0x0
-    (none)        | c0.AIDR (Auxiliary ID register) | [31:0] | 0x0
+    |   配置信号    |            寄存器域             |   位   | 复位值 |
+    | :-----------: | :-----------------------------: | :----: | :----: |
+    | MAXCLKLATENCY |   c15.Power control register    | [10:8] |  b111  |
+    |    CFGEND     |           c1.SCTLR.EE           |  [25]  |   b0   |
+    |    CFGNMFI    |          c1.SCTLR.NMFI          |  [27]  |   b1   |
+    |    TEINIT     |           c1.SCTLR.TE           |  [30]  |   b0   |
+    |    VINITHI    |           c1.SCTLR.V            |  [13]  |   b0   |
+    |   CLUSTERID   |       c0.MPIDR.ClustreID        | [11:8] | b0000  |
+    |    (none)     |            c0.REVIDR            | [31:0] |  0x0   |
+    |    (none)     | c0.AIDR (Auxiliary ID register) | [31:0] |  0x0   |
 
 ## 3.2. APU复位
 
@@ -311,17 +312,17 @@ Zynq总结: 器件结构
         * 开启时钟, **slcr.A9_CPU_RST_CTRL.A9_CLKSTOP0** = 0
 
 ### 3.2.2. 复位后状态
-功能             | 复位后状态
-:--------------: | :----
-CPU1             | 进入 **WFE**, 运行代码位于 0xFFFFFE00 to 0xFFFFFFF0, 唤醒后从 0xFFFFFFF0 开始运行
-L1 Caches        | 禁用
-L1 Caches 有效性 | 未知, 使用之前需要无效化
-MMUs             | 禁用
-SCU              | 禁用
-地址过滤         | 最高和最低的 1 MB 映射到 OCM, 其它映射到 L2
-L2 Cache         | 禁用
-L2 wait states   | Tag RAM and Data RAM wait states are both 7-7-7 for setup latency, write access latency, and read access latency
-L2 Caches 有效性 | 未知, 使用之前需要无效化
+|       功能       | 复位后状态                                                                                                       |
+| :--------------: | :--------------------------------------------------------------------------------------------------------------- |
+|       CPU1       | 进入 **WFE**, 运行代码位于 0xFFFFFE00 to 0xFFFFFFF0, 唤醒后从 0xFFFFFFF0 开始运行                                |
+|    L1 Caches     | 禁用                                                                                                             |
+| L1 Caches 有效性 | 未知, 使用之前需要无效化                                                                                         |
+|       MMUs       | 禁用                                                                                                             |
+|       SCU        | 禁用                                                                                                             |
+|     地址过滤     | 最高和最低的 1 MB 映射到 OCM, 其它映射到 L2                                                                      |
+|     L2 Cache     | 禁用                                                                                                             |
+|  L2 wait states  | Tag RAM and Data RAM wait states are both 7-7-7 for setup latency, write access latency, and read access latency |
+| L2 Caches 有效性 | 未知, 使用之前需要无效化                                                                                         |
 
 ## 3.3. 电源管理
 * CPU standby: WFI, WFE

@@ -1,21 +1,22 @@
 
-Xilinx 7系列FPGA总结：基本结构
----
+<h1 style="text-align:center">Xilinx 7系列FPGA：基本结构</h1>
+
+--------------------------------------------------------------------------------
 
 相关文档:
-分类      | 文档名称                                                       | 文档编号
-:-------- | :------------------------------------------------------------- | :-------
-基本结构  | **Configuration User Guide**                                  | UG470
-^         | **SelectIO Resources User Guide**                             | UG471
-^         | **Clocking Resources User Guide**                             | UG472
-^         | **Memory Resources User Guide**                               | UG473
-^         | **Configurable Logic Block User Guide**                       | UG474
-^         | **DSP48E1 Slice User Guide**                                  | UG479
-收发器    | GTX/GTH Transceivers User Guide                                | UG476
-^         | GTP Transceivers User Guide                                    | UG482
-ADC       | XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide | UG480
-封装和PCB | Packaging and Pinout Product Specification                     | UG475
-^         | PCB Design Guide                                               | UG483
+| 分类      | 文档名称                                                       | 文档编号 |
+| :-------- | :------------------------------------------------------------- | :------- |
+| 基本结构  | **Configuration User Guide**                                   | UG470    |
+| ^         | **SelectIO Resources User Guide**                              | UG471    |
+| ^         | **Clocking Resources User Guide**                              | UG472    |
+| ^         | **Memory Resources User Guide**                                | UG473    |
+| ^         | **Configurable Logic Block User Guide**                        | UG474    |
+| ^         | **DSP48E1 Slice User Guide**                                   | UG479    |
+| 收发器    | GTX/GTH Transceivers User Guide                                | UG476    |
+| ^         | GTP Transceivers User Guide                                    | UG482    |
+| ADC       | XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide | UG480    |
+| 封装和PCB | Packaging and Pinout Product Specification                     | UG475    |
+| ^         | PCB Design Guide                                               | UG483    |
 
 --------------------------------------------------------------------------------
 # 1. CLB
@@ -548,24 +549,24 @@ ADC       | XADC Dual 12-Bit 1 MSPS Analog-to-Digital Converter User Guide | UG4
     * Master Byte Peripheral Interface (BPI) flash (x8 and x16), using parallel NOR flash
 * 配置管脚 (仅考虑 JTAG 和 Master SPI)
     * 专用信号, 位于Bank 0
-        分类  | Pin         | I/O    | 注意
-        :---: | :---------: | :----: | :-------
-        JATG  | TCK_0       | I      | 官方使用 2mm 间距的插针
-        ^     | TDI_0       | I      | ^
-        ^     | TDO_0       | O      | ^
-        ^     | TMS_0       | I      | ^
-        CFG   | PROGRAM_B_0 | I      | 复位配置, 低有效, 最好用 RC POR 复位电路(或复位芯片), 上拉(4.7k)
-        ^     | INIT_B_0    | IO(OD) | 表明配置存储器开始初始化, 需要上拉 (4.7k)
-        ^     | DONE_0      | IO     | 是否配置成功, 高有效, 最好通过 NMOS 驱动一个 LED, 上拉(330)
-        ^     | M[2:0]_0    | I      | 配置模式, Master_SPI 模式为 001, 串联电阻需 ≤ 1 kΩ
-        ^     | CFGBVS_0    | I      | 如果与配置相关的 BANK 0, 14, 15 是 2.5/3.3 V供电, 需要拉到 2.5/3.3 V; 如果是 1.8V, 拉到 Gnd
-        Flash | CCLK_0      | IO     | 配置时钟
+        | 分类  |     Pin     |  I/O   | 注意                                                                                        |
+        | :---: | :---------: | :----: | :------------------------------------------------------------------------------------------ |
+        | JATG  |    TCK_0    |   I    | 官方使用 2mm 间距的插针                                                                     |
+        |   ^   |    TDI_0    |   I    | ^                                                                                           |
+        |   ^   |    TDO_0    |   O    | ^                                                                                           |
+        |   ^   |    TMS_0    |   I    | ^                                                                                           |
+        |  CFG  | PROGRAM_B_0 |   I    | 复位配置, 低有效, 最好用 RC POR 复位电路(或复位芯片), 上拉(4.7k)                            |
+        |   ^   |  INIT_B_0   | IO(OD) | 表明配置存储器开始初始化, 需要上拉 (4.7k)                                                   |
+        |   ^   |   DONE_0    |   IO   | 是否配置成功, 高有效, 最好通过 NMOS 驱动一个 LED, 上拉(330)                                 |
+        |   ^   |  M[2:0]_0   |   I    | 配置模式, Master_SPI 模式为 001, 串联电阻需 ≤ 1 kΩ                                          |
+        |   ^   |  CFGBVS_0   |   I    | 如果与配置相关的 BANK 0, 14, 15 是 2.5/3.3 V供电, 需要拉到 2.5/3.3 V; 如果是 1.8V, 拉到 Gnd |
+        | Flash |   CCLK_0    |   IO   | 配置时钟                                                                                    |
     * 多功能信号, 位于 Bank 14
-        分类  | Pin          | I/O    | 注意
-        :---: | :----------: | :----: | :-------
-        Flash | D00 - D4     | IO     | 配置 Flash 的数据接口, 排序最好与 QSPI 保持一致
-        ^     | FCS          | O      | 配置 Flash 的片选信号, 上拉 ≤ 4.7 kΩ
-        Init  | PUDC_B       | I      | 0 = 使能内部上拉电阻, 1 = 禁用; 不能 float
+        | 分类  |   Pin    |  I/O  | 注意                                            |
+        | :---: | :------: | :---: | :---------------------------------------------- |
+        | Flash | D00 - D4 |  IO   | 配置 Flash 的数据接口, 排序最好与 QSPI 保持一致 |
+        |   ^   |   FCS    |   O   | 配置 Flash 的片选信号, 上拉 ≤ 4.7 kΩ            |
+        | Init  |  PUDC_B  |   I   | 0 = 使能内部上拉电阻, 1 = 禁用; 不能 float      |
     * 在 Vivado 配置选项中设置 `CONFIG_VOLTAGE` 或 `CFGBVS`, 以便检查
 
 ## 6.2. DRP

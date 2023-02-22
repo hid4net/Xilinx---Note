@@ -1,14 +1,14 @@
 
-Zynq UltraScale+总结：器件结构
-----
+<h1 style="text-align:center">Xilinx Zynq UltraScale+：电路设计</h1>
 
+--------------------------------------------------------------------------------
 相关文档:
-分类      | 文档名称                                    | 文档编号
-:-------- | :------------------------------------------ | :-------
-基本结构  | **Technical Reference Manual**              | UG1085
-^         | Zynq UltraScale+ Devices Register Reference | UG1087
-^         | CoreLink GIC-400 Generic Interrupt Controller (r0p1) Technical Reference Manual | ARM::DDI0471B
-^         | PrimeCell Generic Interrupt Controller (PL390) (r0p0) Technical Reference Manual| ARM::DDI0416B
+| 分类     | 文档名称                                                                         | 文档编号      |
+| :------- | :------------------------------------------------------------------------------- | :------------ |
+| 基本结构 | **Technical Reference Manual**                                                   | UG1085        |
+| ^        | Zynq UltraScale+ Devices Register Reference                                      | UG1087        |
+| ^        | CoreLink GIC-400 Generic Interrupt Controller (r0p1) Technical Reference Manual  | ARM::DDI0471B |
+| ^        | PrimeCell Generic Interrupt Controller (PL390) (r0p0) Technical Reference Manual | ARM::DDI0416B |
 
 --------------------------------------------------------------------------------
 # 1. 总体结构
@@ -688,33 +688,33 @@ Zynq UltraScale+总结：器件结构
         * CSU 监测篡改事件
         * CSU 提供硬件支持: 认证文件、通过 PCAP 配置 PL、存储和管理安全密钥、解密文件...
 * 启动模式
-    启动模式 | 模式管脚[3:0] | 管脚位置 | CSU 模式 | 描述
-    :------------- | :--: | :--------: | :----: | :---
-    PS JTAG        | 0000 | JTAG       | Slave  | PSJTAG 接口, PS 专用管脚
-    Quad-SPI (24b) | 0001 | MIO[12:0]  | Master | 24 位地址 (QSPI24)
-    Quad-SPI (32b) | 0010 | MIO[12:0]  | Master | 32 位地址 (QSPI32)
-    SD0 (2.0)      | 0011 | MIO[25:21, 16:13] | Master |SD 2.0
-    NAND           | 0100 | MIO[25:09] | Master | 需要 8 位数据总线
-    SD1 (2.0)      | 0101 | MIO[51:43] | Master | SD 2.0
-    eMMC (1.8V)    | 0110 | MIO[22:13] | Master | eMMC (v4.5) at 1.8V
-    USB0 (2.0)     | 0111 | MIO[52:63] | Slave  | USB 2.0 only
-    PJTAG (MIO #0) | 1000 | MIO[29:26] | Slave  | PJTAG connection 0 option
-    PJTAG (MIO #1) | 1001 | MIO[15:12] | Slave  | PJTAG connection 1 option
-    SD1 LS (3.0)   | 1110 | MIO[51:39] | Master | SD 3.0 with a required SD 3.0 compliant voltage level shifter
+    | 启动模式       | 模式管脚[3:0] |     管脚位置      | CSU 模式 | 描述                                                          |
+    | :------------- | :-----------: | :---------------: | :------: | :------------------------------------------------------------ |
+    | PS JTAG        |     0000      |       JTAG        |  Slave   | PSJTAG 接口, PS 专用管脚                                      |
+    | Quad-SPI (24b) |     0001      |     MIO[12:0]     |  Master  | 24 位地址 (QSPI24)                                            |
+    | Quad-SPI (32b) |     0010      |     MIO[12:0]     |  Master  | 32 位地址 (QSPI32)                                            |
+    | SD0 (2.0)      |     0011      | MIO[25:21, 16:13] |  Master  | SD 2.0                                                        |
+    | NAND           |     0100      |    MIO[25:09]     |  Master  | 需要 8 位数据总线                                             |
+    | SD1 (2.0)      |     0101      |    MIO[51:43]     |  Master  | SD 2.0                                                        |
+    | eMMC (1.8V)    |     0110      |    MIO[22:13]     |  Master  | eMMC (v4.5) at 1.8V                                           |
+    | USB0 (2.0)     |     0111      |    MIO[52:63]     |  Slave   | USB 2.0 only                                                  |
+    | PJTAG (MIO #0) |     1000      |    MIO[29:26]     |  Slave   | PJTAG connection 0 option                                     |
+    | PJTAG (MIO #1) |     1001      |    MIO[15:12]     |  Slave   | PJTAG connection 1 option                                     |
+    | SD1 LS (3.0)   |     1110      |    MIO[51:39]     |  Master  | SD 3.0 with a required SD 3.0 compliant voltage level shifter |
 * Golden 镜像搜素
     > ![UG1085_Fig11-1](/assets/UG1085_Fig11-1.png)
     * 支持搜索镜像: 验证 boot header (识别码, 校验和)
     * 镜像可以位于每个 32KB 处, 每次搜索地址增加 32KB
     * 启动镜像搜索限制
-        启动模式              | 搜索限制
-        :-------------------- | :--:
-        QSPI: 24 位单芯片     | 16 MB
-        QSPI: 24 位并行双芯片 | 32 MB
-        QSPI: 32 位           | 256 MB
-        QSPI: 32 位并行双芯片 | 512 MB
-        NAND                  | 128 MB
-        SD/eMMC               | 8,191 files
-        USB                   | 1 file
+        | 启动模式              |  搜索限制   |
+        | :-------------------- | :---------: |
+        | QSPI: 24 位单芯片     |    16 MB    |
+        | QSPI: 24 位并行双芯片 |    32 MB    |
+        | QSPI: 32 位           |   256 MB    |
+        | QSPI: 32 位并行双芯片 |   512 MB    |
+        | NAND                  |   128 MB    |
+        | SD/eMMC               | 8,191 files |
+        | USB                   |   1 file    |
 * 回滚
     > ![UG1085_Fig11-2](/assets/UG1085_Fig11-2.png)
     * 在 FSBL 中实现, 将另一个 boot 序号写到 **CSU.csu_multi_boot** 寄存器, 然后触发系统复位 (非 POR 复位)
@@ -1102,99 +1102,99 @@ Zynq UltraScale+总结：器件结构
 > ![UG1085_Fig10-1](/assets/UG1085_Fig10-1.png)
 
 * SCLR
-    基地址      | 名称        | 安全访问 | 描述
-    :---------- |:--------------- |:---: |:----
-    0xFD1A_0000 | CRF_APB         | XMPU | FPD 时钟和复位
-    0xFD5C_0000 | APU             | XMPU | APU 控制
-    0xFD61_0000 | FPD_SLCR        | XMPU | FPD 全局 SLCR
-    0xFD69_0000 | FPD_SLCR_SECURE | Yes  | FPD 全局 SLCR, 用于 PCIe, SATA, 和其他协议的 TrustZone 设置
-    0xFF18_0000 | IOU_SLCR        | XPPU | IOU SLCR, 用于 MIO 管脚配置
-    0xFF24_0000 | IOU_SECURE_SLCR | Yes  | IOU SLCR, 用于 AXI 读写保护配置
-    0xFF26_0000 | IOU_SCNTRS      | Yes  | 系统时间戳生成器
-    0xFF41_0000 | LPD_SLCR        | XPPU | LPD SLCR
-    0xFF4B_0000 | LPD_SLCR_SECURE | Yes  | LPD SLCR (TrustZone)
-    0xFF5E_0000 | CRL_APB         | XPPU | LPD 时钟和复位
-    0xFF9A_0000 | RPU             | XPPU | RPU 控制
-    0xFD6E_0000 | CCI_GPV         | Yes  | CCI_GPV (CCI400, 参数)
-    0xFD70_0000 | FPD_GPV         | Yes  | FPD_GPV (参数)
+    | 基地址      | 名称            | 安全访问 | 描述                                                        |
+    | :---------- | :-------------- | :------: | :---------------------------------------------------------- |
+    | 0xFD1A_0000 | CRF_APB         |   XMPU   | FPD 时钟和复位                                              |
+    | 0xFD5C_0000 | APU             |   XMPU   | APU 控制                                                    |
+    | 0xFD61_0000 | FPD_SLCR        |   XMPU   | FPD 全局 SLCR                                               |
+    | 0xFD69_0000 | FPD_SLCR_SECURE |   Yes    | FPD 全局 SLCR, 用于 PCIe, SATA, 和其他协议的 TrustZone 设置 |
+    | 0xFF18_0000 | IOU_SLCR        |   XPPU   | IOU SLCR, 用于 MIO 管脚配置                                 |
+    | 0xFF24_0000 | IOU_SECURE_SLCR |   Yes    | IOU SLCR, 用于 AXI 读写保护配置                             |
+    | 0xFF26_0000 | IOU_SCNTRS      |   Yes    | 系统时间戳生成器                                            |
+    | 0xFF41_0000 | LPD_SLCR        |   XPPU   | LPD SLCR                                                    |
+    | 0xFF4B_0000 | LPD_SLCR_SECURE |   Yes    | LPD SLCR (TrustZone)                                        |
+    | 0xFF5E_0000 | CRL_APB         |   XPPU   | LPD 时钟和复位                                              |
+    | 0xFF9A_0000 | RPU             |   XPPU   | RPU 控制                                                    |
+    | 0xFD6E_0000 | CCI_GPV         |   Yes    | CCI_GPV (CCI400, 参数)                                      |
+    | 0xFD70_0000 | FPD_GPV         |   Yes    | FPD_GPV (参数)                                              |
 * APU/RPU 私有寄存器 (中断)
-    基地址                    | 描述
-    :------------------------ |:----
-    0xF900_0000 ~ 0xF900_1FFF | GIC 分发器
-    0xF900_2000 ~ 0xF900_2FFF | GICC 接口
+    | 基地址                    | 描述       |
+    | :------------------------ | :--------- |
+    | 0xF900_0000 ~ 0xF900_1FFF | GIC 分发器 |
+    | 0xF900_2000 ~ 0xF900_2FFF | GICC 接口  |
 * LPD 外设地址
-    基地址                   | 描述
-    :----------------------- |:----
-    0xFF00_0000, 0xFF01_0000 | UART0, UART1
-    0xFF02_0000, 0xFF03_0000 | I2C0, I2C1
-    0xFF04_0000, 0xFF05_0000 | SPI0, SPI1
-    0xFF06_0000, 0xFF07_0000 | CAN0, CAN1
-    0xFF0A_0000              | GPIO
-    0xFF0B_0000, 0xFF0C_0000, 0xFF0D_0000, 0xFF0E_0000  | GEM0, GEM1, GEM2, GEM3
-    0xFF0F_0000              | QSPI
-    0xFF10_0000              | NAND
-    0xFF16_0000, 0xFF17_0000 | SD0, SD1
-    0xFF99_0000              | IPI 消息缓存
-    0xFF9D_0000, 0xFF9E_0000 | USB0, USB1
-    0xFFA5_0000, 0xFFA5_0800, 0xFFA5_0C00   | System monitor (AMS, PSSYSMON, PLSYSMON)
-    0xFFCB_0000              | CSU_SWDT, 系统看门狗 (csu_pmu_wdt)
+    | 基地址                                             | 描述                                     |
+    | :------------------------------------------------- | :--------------------------------------- |
+    | 0xFF00_0000, 0xFF01_0000                           | UART0, UART1                             |
+    | 0xFF02_0000, 0xFF03_0000                           | I2C0, I2C1                               |
+    | 0xFF04_0000, 0xFF05_0000                           | SPI0, SPI1                               |
+    | 0xFF06_0000, 0xFF07_0000                           | CAN0, CAN1                               |
+    | 0xFF0A_0000                                        | GPIO                                     |
+    | 0xFF0B_0000, 0xFF0C_0000, 0xFF0D_0000, 0xFF0E_0000 | GEM0, GEM1, GEM2, GEM3                   |
+    | 0xFF0F_0000                                        | QSPI                                     |
+    | 0xFF10_0000                                        | NAND                                     |
+    | 0xFF16_0000, 0xFF17_0000                           | SD0, SD1                                 |
+    | 0xFF99_0000                                        | IPI 消息缓存                             |
+    | 0xFF9D_0000, 0xFF9E_0000                           | USB0, USB1                               |
+    | 0xFFA5_0000, 0xFFA5_0800, 0xFFA5_0C00              | System monitor (AMS, PSSYSMON, PLSYSMON) |
+    | 0xFFCB_0000                                        | CSU_SWDT, 系统看门狗 (csu_pmu_wdt)       |
 * FPD 外设地址
-    基地址      | 描述
-    :---------- |:----
-    0xFD0C_0000 | SATA registers (HBA, vendor, port-0/1 control)
-    0xFD0E_0000 | AXI PCIe bridge
-    0xFD0E_0800 | AXI PCIe ingress {0:7}
-    0xFD0E_0C00 | AXI PCIe egress {0:7}
-    0xFD0F_0000 | AXI PCIe DMA {0:7}
-    0xFD3D_0000 | SIOU slave access ports
-    0xFD40_0000 | PS GTR transceivers
-    0xFD48_0000 | PCIe attributes
-    0xFD4A_0000 | DisplayPort controller
-    0xFD4B_0000 | GPU
-    0xFD4C_0000 | DisplayPort DMA
+    | 基地址      | 描述                                           |
+    | :---------- | :--------------------------------------------- |
+    | 0xFD0C_0000 | SATA registers (HBA, vendor, port-0/1 control) |
+    | 0xFD0E_0000 | AXI PCIe bridge                                |
+    | 0xFD0E_0800 | AXI PCIe ingress {0:7}                         |
+    | 0xFD0E_0C00 | AXI PCIe egress {0:7}                          |
+    | 0xFD0F_0000 | AXI PCIe DMA {0:7}                             |
+    | 0xFD3D_0000 | SIOU slave access ports                        |
+    | 0xFD40_0000 | PS GTR transceivers                            |
+    | 0xFD48_0000 | PCIe attributes                                |
+    | 0xFD4A_0000 | DisplayPort controller                         |
+    | 0xFD4B_0000 | GPU                                            |
+    | 0xFD4C_0000 | DisplayPort DMA                                |
 * LPD 系统寄存器
-    基地址      | 描述
-    :---------- |:----
-    0xFF30_0000 | Inter-processor interrupts (IPI)
-    0xFF11_0000, 0xFF12_0000, 0xFF13_0000, 0xFF14_0000 | TTC0, TTC1, TTC2, TTC3
-    0xFF15_0000 | LPD_SWDT, 系统看门狗 (swdt0)
-    0xFF98_0000 | XPPU (Xilinx peripheral protection unit)
-    0xFF9C_0000 | XPPU_Sink
-    0xFF9B_0000 | PL_LPD (S_AXI_LPD)
-    0xFFA0_0000 | OCM 互联
-    0xFFA1_0000 | LPD-FPD 互联
-    0xFFA6_0000 | RTC
-    0xFFA7_0000 | OCM_XMPU
-    0xFFA8_0000 | LPD_DMA channels {0:7}
-    0xFFC8_0000 | CSU_DMA
-    0xFFCA_0000 | Configuration and security unit (CSU)
-    0xFFCD_0000 | Battery-backed RAM (BBRAM) 控制和数据
+    | 基地址                                             | 描述                                     |
+    | :------------------------------------------------- | :--------------------------------------- |
+    | 0xFF30_0000                                        | Inter-processor interrupts (IPI)         |
+    | 0xFF11_0000, 0xFF12_0000, 0xFF13_0000, 0xFF14_0000 | TTC0, TTC1, TTC2, TTC3                   |
+    | 0xFF15_0000                                        | LPD_SWDT, 系统看门狗 (swdt0)             |
+    | 0xFF98_0000                                        | XPPU (Xilinx peripheral protection unit) |
+    | 0xFF9C_0000                                        | XPPU_Sink                                |
+    | 0xFF9B_0000                                        | PL_LPD (S_AXI_LPD)                       |
+    | 0xFFA0_0000                                        | OCM 互联                                 |
+    | 0xFFA1_0000                                        | LPD-FPD 互联                             |
+    | 0xFFA6_0000                                        | RTC                                      |
+    | 0xFFA7_0000                                        | OCM_XMPU                                 |
+    | 0xFFA8_0000                                        | LPD_DMA channels {0:7}                   |
+    | 0xFFC8_0000                                        | CSU_DMA                                  |
+    | 0xFFCA_0000                                        | Configuration and security unit (CSU)    |
+    | 0xFFCD_0000                                        | Battery-backed RAM (BBRAM) 控制和数据    |
 * LPD 系统寄存器
-    基地址      | 描述
-    :---------- |:----
-    0xFD00_0000 | DDR_XMPU{0:5}
-    0xFD07_0000 | DDR controller
-    0xFD08_0000 | DDR PHY
-    0xFD09_0000 | DDR QoS control
-    0xFD0B_0000 | Arm for DDR
-    0xFD36_0000 | HPC0 (S_AXI_HPC0_FPD)
-    0xFD37_0000 | HPC1 (S_AXI_HPC1_FPD)
-    0xFD38_0000 | HP0 (S_AXI_HP0_FPD)
-    0xFD39_0000 | HP1 (S_AXI_HP1_FPD)
-    0xFD3A_0000 | HP2 (S_AXI_HP2_FPD)
-    0xFD3B_0000 | HP3 (S_AXI_HP3_FPD)
-    0xFD49_0000 | Arm for CCI
-    0xFD4D_0000 | FPD_SWDT, system watchdog timer (swdt1)
-    0xFD50_0000 | FPD_DMA channels {0:7}
-    0xFD5D_0000 | FPD_XMPU
-    0xFD4F_0000 | XMPU_Sink (FPD)
-    0xFD5E_0000 | CCI_REG register set wrapper: debug enables
-    0xFD5F_0000 | SMMU_REG (中断, 电源, 控制)
-    0xFD6E_0000 | CCI_GPV (CCI400, 参数)
-    0xFD70_0000 | FPD_GPV (参数)
-    0xFD80_0000 | SMMU_GPV (SMMU500, 参数)
-    0xFE00_0000 | IOU_GPV (参数)
-    0xFE10_0000 | LPD_GPV (参数)
+    | 基地址      | 描述                                        |
+    | :---------- | :------------------------------------------ |
+    | 0xFD00_0000 | DDR_XMPU{0:5}                               |
+    | 0xFD07_0000 | DDR controller                              |
+    | 0xFD08_0000 | DDR PHY                                     |
+    | 0xFD09_0000 | DDR QoS control                             |
+    | 0xFD0B_0000 | Arm for DDR                                 |
+    | 0xFD36_0000 | HPC0 (S_AXI_HPC0_FPD)                       |
+    | 0xFD37_0000 | HPC1 (S_AXI_HPC1_FPD)                       |
+    | 0xFD38_0000 | HP0 (S_AXI_HP0_FPD)                         |
+    | 0xFD39_0000 | HP1 (S_AXI_HP1_FPD)                         |
+    | 0xFD3A_0000 | HP2 (S_AXI_HP2_FPD)                         |
+    | 0xFD3B_0000 | HP3 (S_AXI_HP3_FPD)                         |
+    | 0xFD49_0000 | Arm for CCI                                 |
+    | 0xFD4D_0000 | FPD_SWDT, system watchdog timer (swdt1)     |
+    | 0xFD50_0000 | FPD_DMA channels {0:7}                      |
+    | 0xFD5D_0000 | FPD_XMPU                                    |
+    | 0xFD4F_0000 | XMPU_Sink (FPD)                             |
+    | 0xFD5E_0000 | CCI_REG register set wrapper: debug enables |
+    | 0xFD5F_0000 | SMMU_REG (中断, 电源, 控制)                 |
+    | 0xFD6E_0000 | CCI_GPV (CCI400, 参数)                      |
+    | 0xFD70_0000 | FPD_GPV (参数)                              |
+    | 0xFD80_0000 | SMMU_GPV (SMMU500, 参数)                    |
+    | 0xFE00_0000 | IOU_GPV (参数)                              |
+    | 0xFE10_0000 | LPD_GPV (参数)                              |
 
 --------------------------------------------------------------------------------
 # 16. 总线: PS 互联与系统保护单元
