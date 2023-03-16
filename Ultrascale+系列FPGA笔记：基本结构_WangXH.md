@@ -215,8 +215,8 @@
         * 配置选项
             * `Match_cycle`: 使 FPGA 在 DCI 校准后才开始 startup
             * `DCIUpdateMode`: DCI 校准模式
-                * AsRequired (默认): 芯片初始化时校准, 根据需要动态调节, Xilinx 强烈建议此选项
-                * Quiet: 芯片初始化时校准一次, **DCIRESET** 复位时调节
+                * `AsRequired` (默认): 芯片初始化时校准, 根据需要动态调节, Xilinx 强烈建议此选项
+                * `Quiet`: 芯片初始化时校准一次, **DCIRESET** 复位时调节
     * 特殊情况
         * 如果 Bank 65 的多功能管脚使用 DCI, 需要在设计中添加 DCIRESET, 且复位后才能使用 DCI
             * 多功能管脚在芯片启动过程中会忽略 DCI 校准
@@ -229,15 +229,15 @@
     * 终端匹配
         * 与 DCI 不同, 电阻未经校准, 可能不准
         * HRIO 和 HPIO: 戴维南终端匹配, 支持 HSTL 和 SSTL
-            * 支持 RTT_40, RTT_48, RTT_60, RTT_NONE
+            * 支持 `RTT_40`, `RTT_48`, `RTT_60`, `RTT_NONE`
         * HRIO 和 HPIO: 单终端匹配, 支持 POD 和 HSUL
-            * POD 支持 RTT_40, RTT_48, RTT_60, RTT_NONE
-            * HSUL 支持: RTT_120, RTT_240, RTT_NONE
+            * POD 支持 `RTT_40`, `RTT_48`, `RTT_60`, `RTT_NONE`
+            * HSUL 支持: `RTT_120`, `RTT_240`, `RTT_NONE`
         * 作用于输入或双向端口
         * 阻抗可选 40Ω, 48Ω, 60Ω, 通过 `OUTPUT_IMPEDANCE` 属性设置, `RDRV_40_40, RDRV_48_48, RDRV_60_60`
     * 源端匹配
         * 与 DCI 不同, 电阻未经校准, 可能不准
-        * OUTPUT_IMPEDANCE: RDRV_40_40, RDRV_48_48, RDRV_60_60
+        * OUTPUT_IMPEDANCE: `RDRV_40_40`, `RDRV_48_48`, `RDRV_60_60`
     * HPIO 可以控制接收器的 offset
         * 最大可支持 ±35 mV 的偏移
         * 输入将被上拉到 V~REF~ (外部或内部)
@@ -279,12 +279,12 @@
 * 发送器预加重
     * 支持某些电平标准 (例如 DDR4 应用中)
     * 由属性 `ENABLE_PRE_EMPHASIS` 控制
-        * PRE_EMPHASIS = RDRV_NONE (default)
-        * PRE_EMPHASIS = RDRV_240 (where ENABLE_PRE_EMPHASIS must be set to TRUE)
+        * `PRE_EMPHASIS = RDRV_NONE` (default)
+        * `PRE_EMPHASIS = RDRV_240` (where ENABLE_PRE_EMPHASIS must be set to TRUE)
 * LVDS发送器预加重
     * 由属性 `LVDS_PRE_EMPHASIS` 控制
-        * LVDS_PRE_EMPHASIS = FALSE (Default)
-        * LVDS_PRE_EMPHASIS = TRUE (where ENABLE_PRE_EMPHASIS must be set to TRUE)
+        * `LVDS_PRE_EMPHASIS = FALSE` (Default)
+        * `LVDS_PRE_EMPHASIS = TRUE` (where ENABLE_PRE_EMPHASIS must be set to TRUE)
 * 接收器均衡
     * 支持某些电平标准 (例如 DDR4 应用中)
     * 由属性 `EQUALIZATION` 控制
@@ -319,7 +319,7 @@
 ### 3.2.1. Overview
 * 每个 Bank 包含 4 个 ByteGroup, 每个 ByteGroup 可以作为一组使用, 也可以拆分为两个小块
 > ![UG571_Fig2-1](/assets/UG571_Fig2-1.png)
-* Group 1,2 中包含 clocks quad byte clock (QBC) and global clock (GC) 管脚
+* Group 1,2 中包含 **clocks quad byte clock (QBC)** and **global clock (GC)** 管脚
 * QBC: 可用于所在的小块, 或 Byte, 或整个 Bank
 </br>
 
@@ -338,12 +338,12 @@
 ### 3.2.2. Component 原型
 * 简单的寄存输入和输出
 * IDDRE1
-    * 支持 OPPOSITE_EDGE, SAME_EDGE, SAME_EDGE_PIPELINED 三种模式
+    * 支持 `OPPOSITE_EDGE`, `SAME_EDGE`, `SAME_EDGE_PIPELINED` 三种模式
     > ![UG571_Fig2-4](/assets/UG571_Fig2-4.png)
     > ![UG571_Fig2-5](/assets/UG571_Fig2-5.png)
     > ![UG571_Fig2-6](/assets/UG571_Fig2-6.png)
 * ODDRE1
-    * 仅支持 SAME_EDGE 模式
+    * 仅支持 `SAME_EDGE` 模式
     > ![UG571_Fig2-8](/assets/UG571_Fig2-8.png)
     * 支持 single 和 serialized 三态模式
     > ![UG571_Fig2-10](/assets/UG571_Fig2-10.png)
@@ -359,15 +359,15 @@
 * IDELAYE3
     > ![UG571_Fig2-16](/assets/UG571_Fig2-16.png)
     * 512 拍延迟线
-    * 支持 COUNT 和 TIME 模式
-        * COUNT: 无需 IDELAYCTRL, 未校准, DELAY_VALUE $\in [0, 511] 拍$
-        * TIME: 需要 IDELAYCTRL, 根据电压和温度校准, DELAY_VALUE 是 xx ps, 时钟需与 IDELAYCTRL 一致
+    * 支持 `COUNT` 和 `TIME` 模式
+        * `COUNT`: 无需 IDELAYCTRL, 未校准, DELAY_VALUE $\in [0, 511] 拍$
+        * `TIME`: 需要 IDELAYCTRL, 根据电压和温度校准, DELAY_VALUE 是 xx ps, 时钟需与 IDELAYCTRL 一致
     * 支持级联
 * ODELAYE3
     > ![UG571_Fig2-22](/assets/UG571_Fig2-22.png)
-    * 支持 COUNT 和 TIME 模式
-        * COUNT: 无需 IDELAYCTRL, 未校准, DELAY_VALUE $\in [0, 511] 拍$
-        * TIME: 需要 IDELAYCTRL, 根据电压和温度校准, DELAY_VALUE 是 xx ps, 时钟需与 IDELAYCTRL 一致
+    * 支持 `COUNT` 和 `TIME` 模式
+        * `COUNT`: 无需 IDELAYCTRL, 未校准, DELAY_VALUE $\in [0, 511] 拍$
+        * `TIME`: 需要 IDELAYCTRL, 根据电压和温度校准, DELAY_VALUE 是 xx ps, 时钟需与 IDELAYCTRL 一致
     * 支持级联
 * IDELAYCTRL
     > ![UG571_Fig2-25](/assets/UG571_Fig2-25.png)
@@ -388,10 +388,10 @@
 * RXTX_BITSLICE
     > ![UG571_Fig2-31](/assets/UG571_Fig2-31.png)
     * 输入/输出延迟线
-        * 512 拍, 支持 COUNT 和 TIME 模式
+        * 512 拍, 支持 `COUNT` 和 `TIME` 模式
         * 两种控制方式
             * BITSLICE_CONTROL via the RIU 接口
-            * 内部逻辑直接控制 RXTX_BITSLICE 的信号(CLK, CE, INC, LOAD, CNTVALUEIN[8:0], CNTVALUEOU[8:0], RST_DLY, and EN_VTC)
+            * 内部逻辑直接控制 RXTX_BITSLICE 的信号(`CLK`, `CE`, `INC`, `LOAD`, `CNTVALUEIN[8:0]`, `CNTVALUEOU[8:0]`, `RST_DLY`, and `EN_VTC`)
         * 延迟线级联:
             * RXTX_BITSLICE 不支持级联
             * RX_BITSLICE 支持级联: 使用 TX_BITSLICE 中未用到的输出延迟线实现级联, 延时增加一倍
@@ -417,8 +417,8 @@
         > ![UG571_Fig2-39](/assets/UG571_Fig2-39.png)
         * 特殊应用: 输出时钟, 例如将 `D` 设置为 10101010 或 1010 可以输出 50% 占空比的时钟
         * `OUTPUT_PHASE_90` 属性: 控制数据是否偏移
-            * TRUE: 对齐到下降沿
-            * FALSE: 对齐到上升沿
+            * `TRUE`: 对齐到下降沿
+            * `FALSE`: 对齐到上升沿
 * RX_BITSLICE
     * RXTX_BITSLICE 的接收器
         > ![UG571_Fig2-46](/assets/UG571_Fig2-46.png)
