@@ -80,6 +80,11 @@
         1. 打开综合或布局布线设计 -> Setting -> Edit Device Properties
             ![Vivado-DeviceProperties-Edit-2-1.png](/assets/Vivado-DeviceProperties-Edit-2-1.png)
             ![Vivado-DeviceProperties-Edit-2-2.png](/assets/Vivado-DeviceProperties-Edit-2-2.png)
+    * 也可直接设置XDC文件
+        ```bash
+        set_property BITSTREAM.CONFIG.CONFIGRATE 50 [current_design]
+        set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
+        ```
 * 远程更新
     * 方案 1: 配置数据 $\xrightarrow {通信接口}$ FPGA $\xrightarrow {QSPI控制器 + STRATUP}$ 外部配置用的 QSPI Flash
         > ![XAPP1081_Fig7.png](/assets/XAPP1081_Fig7.png)
@@ -87,8 +92,6 @@
         * 最后启用 MultiBoot 和 Fallback 选项
             > 在 Vivado::Device Properties 中设置
         > 参见: **XAPP1081**, XAPP1257, UG570
-        > 参见: \Xilinx\FPGA Configuration\ 下相关文件
-
 
 ## 5.2. Zynq
 
