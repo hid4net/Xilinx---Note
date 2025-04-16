@@ -133,8 +133,9 @@
     * **BUFGCE_DIV**: 1~8 分频
 * 叶 buffer: **BUFCE_LEAF**
     * 从 HSC 引入时钟, 驱动各种模块
-* 高速收发器: **BUFG_GT** 和 **BUFG_GT_SYNC**
-    * 可以 1~8 分频
+* 高速收发器: **BUFG_GT**
+    * 一般接收**IBUFDS_GTE** 的 **ODIV2** 信号
+    * **BUFG_GT_SYNC** 为  **BUFG_GT** 的控制管脚提供同步信号, 无需例化, 会自动添加
 * **BUFG_PS**
     * Zynq UltraScale+ MPSoC processor system (PS)
 
